@@ -24,7 +24,7 @@ while option != 3:
 
 	if option == 1:
 		account = input('Enter account from which to select followers: ')
-		amount = input('Enter amount of followers to evaluate: ')
+		amount = int(input('Enter amount of followers to evaluate: '))
 		follow_from_account(account, amount)
 	
 	if option == 2:

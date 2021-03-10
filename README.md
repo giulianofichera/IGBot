@@ -5,9 +5,11 @@
 ## Funcionality
 
 ### Follow an account's followers
-Scrapes a certain number of followers from a given account.  
-Then, it selects the profiles that have less followers than following and stores them in an array.  
-Finally, the bot proceeds to follow the selected profiles in the array.
+Scrapes a certain number of followers from a desired account.  
+Then, the profiles that have less followers than following are selected and stored in an array.  
+The selected profiles stored in the array are followed.  
+
+#### Additional funcionality to save to a .csv file was added.
 
 ### See an account's statistics
 Obtains certain statistics of an account.  
@@ -17,8 +19,9 @@ Obtains certain statistics of an account.
 
 
 ### Future roadmap:
-~~Make the bot programmable to choose which account's followers to scrape, and how many to scrape.~~  Done  
-~~Add functionality to see statistics from a specific account.~~  Done  
+~~Make the bot programmable to choose which account's followers to scrape, and how many to scrape.~~ `` ``✅ Done  
+~~Add functionality to see statistics from a specific account.~~  `` ``✅ Done  
+~~Add functionality to save followed accounts to .csv file.~~  `` ``✅ Done  
 Add more granularity on which accounts to follow (location, etc).
 
 

@@ -1,6 +1,6 @@
 from instaclient import InstaClient
 from instaclient.errors import *
-from tabulate import tabulate
+import csv
 
 account = 'lowells_biergarten'
 amount = 10
@@ -41,6 +41,31 @@ def login():
 				'Enter the security code that was sent to you via SMS: ')
 		client.input_security_code(code)
 
+def ask_yes_or_no(question):
+	while True:
+		try:
+			answer = input(question)
+		except ValueError:
+			print('\nInvalid input value. Enter Y or N: ')
+			continue
+
+		answer = answer.lower().strip()
+
+		if answer == 'y' or answer == 'n':
+			return answer
+		else:
+			print('\nInvalid input. Enter Y or N: ')
+			continue
+
+def write_to_csv(data):
+		try:
+			with open("follow_candidates.csv","w") as f:
+				with f:     
+					write = csv.writer(f)
+					write.writerow(data)
+
+		except IOError:
+			print('IO Error when opening the file.')
 
 def follow_from_account(account, amount):
 
@@ -85,6 +110,15 @@ def follow_from_account(account, amount):
 		client.follow_user(person)
 
 	print(f'\nFinished following {len(follow_candidates)} selected.\n')
+
+	answer = ask_yes_or_no('Would you like to save the list to a .csv file? (Y/N)')
+
+	if answer == 'y':
+		print('Saving .csv file...')
+		write_to_csv(follow_candidates)
+		print('File saved.')
+
+	
 # -----------------------------------------------------------------------------------
 
 
@@ -111,8 +145,6 @@ def stats_account(account):
 	print(f'Bio: {person.biography}')
 	print(f'Private Account: {person.is_private}')
 	print(f'Mutual friends: {person.mutual_followed}')
-
-
 
 # ---------------------------------------------------------------------------------
 
