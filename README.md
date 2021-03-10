@@ -17,8 +17,8 @@ Obtains certain statistics of an account.
 
 
 ### Future roadmap:
-~~Make the bot programmable to choose which account's followers to scrape, and how many to scrape.~~ Done  
-~~Add functionality to see statistics from a specific account.~~ Done  
+~~Make the bot programmable to choose which account's followers to scrape, and how many to scrape.~~  Done  
+~~Add functionality to see statistics from a specific account.~~  Done  
 Add more granularity on which accounts to follow (location, etc).
 
 
