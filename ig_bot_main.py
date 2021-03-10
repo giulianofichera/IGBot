@@ -41,6 +41,8 @@ def login():
 				'Enter the security code that was sent to you via SMS: ')
 		client.input_security_code(code)
 
+# -----------------------------------------------------------------------------------
+
 def ask_yes_or_no(question):
 	while True:
 		try:
@@ -57,6 +59,8 @@ def ask_yes_or_no(question):
 			print('\nInvalid input. Enter Y or N: ')
 			continue
 
+# -----------------------------------------------------------------------------------
+
 def write_to_csv(data):
 		try:
 			with open("follow_candidates.csv","w") as f:
@@ -66,6 +70,8 @@ def write_to_csv(data):
 
 		except IOError:
 			print('IO Error when opening the file.')
+
+# -----------------------------------------------------------------------------------
 
 def follow_from_account(account, amount):
 
@@ -88,7 +94,7 @@ def follow_from_account(account, amount):
 	followers = followers[0]
 	follow_candidates = []
 
-	# --- Check conditions and select profiles ---
+	# ------ Check conditions and select profiles ------
 	for person in followers:
 		person = client.get_profile(person.username) #Run in a try block
 
@@ -99,11 +105,7 @@ def follow_from_account(account, amount):
 			print(f'Following: {person.followed_count}'.ljust(18), end='')
 			print(f'Followers: {person.follower_count}'.ljust(18))
 
-	# print('Slected:')
-	# for person in follow_candidates:
-	#  print (person)
-
-	# --- Follow Selected ---
+	# ------ Follow Selected ------
 	print(f'\nFollowing selected {len(follow_candidates)} profiles...')
 	for person in follow_candidates:
 		print(f'Following {person}')
@@ -113,23 +115,21 @@ def follow_from_account(account, amount):
 
 	answer = ask_yes_or_no('Would you like to save the list to a .csv file? (Y/N)')
 
+	# ------ Save to .csv ------
 	if answer == 'y':
 		print('Saving .csv file...')
 		write_to_csv(follow_candidates)
 		print('File saved.')
 
-	
 # -----------------------------------------------------------------------------------
-
 
 def stats_account(account):
 
 	client = login()
 
 	# ------ Scrape Instagram followers ------
-	#username = input('Enter an instagram account\'s username to scrape it\'s followers: ')
 	try:
-		# This will try to get the user's first n followers
+		# This will try to get the user's profile data
 		person = client.get_profile(account)
 	except InvalidUserError:
 		# Exception raised if the username is not valid
