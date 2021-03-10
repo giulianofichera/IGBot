@@ -7,8 +7,8 @@
 ###
 ##
 ### Future roadmap:
-###  - Make the bot programmable to choose which accounts followers to scrape, and how many to scrape.
-
+###  Make the bot programmable to choose which accounts followers to scrape, and how many to scrape.
+###  Add functionality to see statistics from a specific account.
 
 
 #
