@@ -4,6 +4,11 @@ import csv
 from pathlib import Path
 
 
+
+
+
+
+'''
 print('\n\n')
 path = Path(__file__)
 print(path)
@@ -11,8 +16,6 @@ path = Path(__file__).parent.parent / "IGBotCredentials.txt"
 print('/Users/giulianofichera/Documents/Python Projects/IGBotCredentials.txt')
 
 print(path)
-
-'''
 client = InstaClient(driver_path='/Users/giulianofichera/Documents/Python Projects/IGBot/chromedriver')
 
 # ------ Read Credentials ------
