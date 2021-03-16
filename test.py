@@ -3,9 +3,15 @@ from instaclient.errors import *
 import csv
 from pathlib import Path
 
+def write_to_csv(data):
+		try:
+			with open("follow_candidates.csv","w") as f:
+				with f:     
+					write = csv.writer(f)
+					write.writerow(data)
 
-
-
+		except IOError:
+			print('IO Error when opening the file.')
 
 
 '''
