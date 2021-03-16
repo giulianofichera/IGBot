@@ -1,5 +1,6 @@
 from instaclient import InstaClient
 from instaclient.errors import *
+from pathlib import Path
 import csv
 
 account = 'lowells_biergarten'
@@ -7,12 +8,11 @@ amount = 10
 
 
 def login():
-	client = InstaClient(driver_path='/Users/giulianofichera/Documents/Python Projects/IGBot/chromedriver')
+	client = InstaClient(driver_path = Path(__file__).parent / "chromedriver")
 
 	# ------ Read Credentials ------
 	try:
-		f = open(
-			"/Users/giulianofichera/Documents/Python Projects/IGBotCredentials.txt", 'r')
+		f = open(Path(__file__).parent.parent / "IGBotCredentials.txt", 'r')
 	except OSError:
 		print("Could not open/read file:", f)
 		sys.exit()
@@ -107,13 +107,16 @@ def follow_from_account(account, amount):
 
 	# ------ Follow Selected ------
 	print(f'\nFollowing selected {len(follow_candidates)} profiles...')
+	
+	count = 1
 	for person in follow_candidates:
-		print(f'Following {person}')
+		print(f'Following {count}: {person}')
 		client.follow_user(person)
+		count += 1
 
 	print(f'\nFinished following {len(follow_candidates)} selected.\n')
 
-	answer = ask_yes_or_no('Would you like to save the list to a .csv file? (Y/N)')
+	answer = ask_yes_or_no('Would you like to save the list to a .csv file? (Y/N): ') or 'y'
 
 	# ------ Save to .csv ------
 	if answer == 'y':
@@ -147,6 +150,56 @@ def stats_account(account):
 	print(f'Mutual friends: {person.mutual_followed}')
 
 # ---------------------------------------------------------------------------------
+
+
+def unfollow_from_account(account, amount):
+
+	client = login()
+
+	# ------ Scrape Your Followers ------
+	try:
+		# This will try to get the user's followers, amount = None to scrape all
+		following = client.get_following(account,amount)
+	except InvalidUserError:
+		# Exception raised if the username is not valid
+		print('The username is not valid')
+	except PrivateAccountError:
+		# Exception raised if the account you are trying to scrape is private
+		print('{} is a private account'.format(username))
+
+	print(f'Object following:\n {following[0]}\n\n')
+
+	following = following[0]
+	not_following = []
+	
+	# ------ Check conditions and select profiles ------
+	for person in following:
+		person = client.get_profile(person.username) #Run in a try block
+
+		if person.follows_viewer == False or person.follows_viewer == 'false':
+			not_following.append(person.username)
+			print(f'User {person.username} not following {account}.')
+		else:
+			print(f'User {person.username} follows {account}: {person.follows_viewer}')
+
+	# ------ Unfollow Selected ------
+	print(f'\nUnfollowing selected {len(not_following)} profiles...')
+	
+	count = 1 
+	for person in not_following:
+		print(f'Unfollowing {count}: {person}')
+		client.unfollow_user(person)
+		count += 1
+
+	print(f'\nFinished unfollowing {len(not_following)} selected.\n')
+
+	answer = ask_yes_or_no('Would you like to save the list to a .csv file? (Y/N): ') or 'y'
+
+	# ------ Save to .csv ------
+	if answer == 'y':
+		print('Saving .csv file...')
+		write_to_csv(not_following)
+		print('File saved.')
 
 
 if __name__ == '__main__':
