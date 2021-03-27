@@ -15,6 +15,10 @@ The selected profiles stored in the array are followed.
 Obtains certain statistics of an account.  
 
 
+### Create MySQL database of an account's followers
+Save follower's data such as username, following, followers, post count, etc. to use at a later stage and avoid having to scrape an account again.  
+
+
 ##
 
 
@@ -22,6 +26,8 @@ Obtains certain statistics of an account.
 ~~Make the bot programmable to choose which account's followers to scrape, and how many to scrape.~~ `` ``✅ Done  
 ~~Add functionality to see statistics from a specific account.~~  `` ``✅ Done  
 ~~Add functionality to save followed accounts to .csv file.~~  `` ``✅ Done  
+~~Add SQL database creation and manipulation.~~  `` ``✅ Done  
+Add functionality to follow users from SQL database that meet (following > followers) criteria.  
 Add more granularity on which accounts to follow (location, etc).
 
 

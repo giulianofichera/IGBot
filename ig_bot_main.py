@@ -1,6 +1,7 @@
 from instaclient import InstaClient
 from instaclient.errors import *
 from pathlib import Path
+from ig_mysql_functions import insert_followers_ig_users_followers
 import csv
 
 account = 'lowells_biergarten'
@@ -151,7 +152,6 @@ def stats_account(account):
 
 # ---------------------------------------------------------------------------------
 
-
 def unfollow_from_account(account, amount):
 
 	client = login()
@@ -200,6 +200,44 @@ def unfollow_from_account(account, amount):
 		print('Saving .csv file...')
 		write_to_csv(not_following)
 		print('File saved.')
+
+# ---------------------------------------------------------------------------------
+
+def insert_to_mysql(account, amount):
+
+	client = login()
+
+	# ------ Scrape Instagram followers ------
+	try:
+		followers = client.get_followers(account, amount)
+	except InvalidUserError:
+		print('The username is not valid')
+	except PrivateAccountError:
+		print('{} is a private account'.format(username))
+
+	print(f'Object followers:\n {followers[0]}\n\n')
+
+	followers = followers[0]
+	sql_followers_array = []
+
+	# ------ Get whole profile for each follower ------
+	for person in followers:
+		person = client.get_profile(person.username) #Run in a try block -
+
+		person_data = {
+			"username": person.username,
+			"followed_count": person.followed_count,
+			"follower_count": person.follower_count,
+			"post_count": person.post_count,
+			"follows_viewer": person.follows_viewer,
+			"requested_by_viewer": person.requested_by_viewer
+			}
+
+		sql_followers_array.append(person_data.copy())
+		print(f'Scraped {person.username} data.')
+
+	insert_followers_ig_users_followers(sql_followers_array)
+
 
 
 if __name__ == '__main__':
