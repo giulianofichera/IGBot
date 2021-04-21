@@ -10,7 +10,7 @@ if __name__ == '__main__':
 			"\nMenu\n"
 			"1 - Search selected followers from account\n"
 			"2 - View account statistics\n"
-			"3 - Unfollow not following back\n"
+			"3 - Unfollow not foll1owing back\n"
 			"4 - Make SQL database of followers from account\n"
 			"5 - Other SQL functions\n"
 			"6 - Exit")

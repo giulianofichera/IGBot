@@ -3,6 +3,8 @@ from instaclient.errors import *
 from pathlib import Path
 from ig_mysql_functions import insert_followers_ig_users_followers
 import csv
+import time
+import random
 
 account = 'lowells_biergarten'
 amount = 10
@@ -99,7 +101,7 @@ def follow_from_account(account, amount):
 	for person in followers:
 		person = client.get_profile(person.username) #Run in a try block
 
-		if person.followed_count > person.follower_count:
+		if person.followed_count > person.follower_count*1.4:
 			follow_candidates.append(person.username)
 
 			print(f'Found {person.username}.'.ljust(30), end='')
@@ -114,6 +116,10 @@ def follow_from_account(account, amount):
 		print(f'Following {count}: {person}')
 		client.follow_user(person)
 		count += 1
+
+		sleep_time = random.randrange(15,25) #sleeps random time to reduce chances of banning
+		time.sleep(sleep_time)
+		
 
 	print(f'\nFinished following {len(follow_candidates)} selected.\n')
 
